@@ -43,6 +43,22 @@ body{
 
 .axis2{
     position: absolute;
+    height: 100px;
+    width: 100px;
+    border-right: 2px solid #fff;
+    border-radius: 50px;
+    top: 350px;
+    left: 160px;
+}
+
+.axis2 .moon{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    border-radius: 50%;
+    top: 85px;
+    left: 50px;
 }
 
 @keyframes anime-1 {

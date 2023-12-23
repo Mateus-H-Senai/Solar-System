@@ -6,12 +6,19 @@
     text-decoration: none;
 }
 
+.flex{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
 body{
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #000;
+    background-color: #522c65;
 }
 
 .sun{
@@ -23,47 +30,74 @@ body{
     border-radius: 50%;
 }
 
-.axis1{
+.axis{
     position: absolute;
-    height: 400px;
-    width: 400px;
+    height: 320px;
+    width: 320px;
     border-right: 2px solid #fff;
     border-radius: 50%;
-    animation: anime-1 5s linear infinite;
+    animation: anime-1 2s linear infinite;
+}
+
+.axis.second{
+    height: 480px;
+    width: 480px;
+    animation: anime-1 3s linear infinite;
+}
+
+.axis.third{
+    height: 600px;
+    width: 600px;
+    animation: anime-1 3s linear infinite;
+}
+
+.planet{
+    height: 30px;
+    width: 30px;
+    background-color: gray;
+    border-radius: 50%;
+}
+
+.planet.second{
+    height: 40px;
+    width: 40px;
+    background-color: #a57c1b;
+}
+
+.planet.third{
+    height: 60px;
+    width: 60px;
+    background-color: #a57c1b;
+}
+
+.orbit{
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    left: 50%;    
+    bottom: 0;
+    transform: translate(-50%, 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orbit.third{
+    border-right: 2px solid #fff;
+    border-radius: 50px;
+}
+
+.moon{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    border-radius: 50%;
+    bottom: 0;
+    transform: translateY(10px);
 }
 
 @keyframes anime-1 {
     0%{transform:rotate(0deg);}
     100%{transform:rotate(360deg);}
 }
-
-.axis1 .earth{
-    position: absolute;
-    height: 60px;
-    width: 60px;
-    background-color: steelblue;
-    border-radius: 50%;
-    left: 180px;
-    top: 370px;
-}
-
-.axis2{
-    position: absolute;
-    height: 100px;
-    width: 100px;
-    border-right: 2px solid #fff;
-    border-radius: 50px;
-    top: 350px;
-    left: 160px;
-}
-
-.axis2 .moon{
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    background: #fff;
-    border-radius: 50%;
-    top: 85px;
-    left: 50px;
-}
-

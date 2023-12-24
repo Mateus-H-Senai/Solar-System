@@ -1,128 +1,118 @@
-let Bubble = function (parentNode) {
-    let self = this
-    self.parentNode = parentNode
-    self.getCanvasSize()
-    window.addEventListener('resize', function () {
-      self.getCanvasSize()
+class Bubble {
+  constructor(parentNode) {
+    this.parentNode = parentNode
+    this.getCanvasSize()
+    window.addEventListener('resize', () => this.getCanvasSize())
+    this.mouseX = 0
+    this.mouseY = 0
+    window.addEventListener('mousemove', (e) => {
+      this.mouseX = e.clientX
+      this.mouseY = e.clientY
     })
-    self.mouseX = 0
-    self.mouseY = 0
-    window.addEventListener('mousemove', function (e) {
-      self.mouseX = e.clientX
-      self.mouseY = e.clientY
-    })
-    self.randomise()
+    this.randomise()
   }
-
-  Bubble.prototype.getCanvasSize = function () {
-    let self = this
-    self.canvasWidth = self.parentNode.clientWidth
-    self.canvasHeight = self.parentNode.clientHeight
+  getCanvasSize() {
+    this.canvasWidth = this.parentNode.clientWidth
+    this.canvasHeight = this.parentNode.clientHeight
   }
-
-  Bubble.prototype.generateDecimalBetween = function (min, max) {
+  generateDecimalBetween(min, max) {
     return (Math.random() * (min - max) + max).toFixed(2)
   }
+  update() {
+    this.translateX = this.translateX - this.movementX
+    this.translateY = this.translateY - this.movementY
+    this.posX += ((this.mouseX / (this.staticity / this.magnetism)) - this.posX) / this.smoothFactor
+    this.posY += ((this.mouseY / (this.staticity / this.magnetism)) - this.posY) / this.smoothFactor
 
-  Bubble.prototype.update = function () {
-    let self = this
-    self.translateX = self.translateX - self.movementX
-    self.translateY = self.translateY - self.movementY
-    self.posX += ((self.mouseX / (self.staticity / self.magnetism)) - self.posX) / self.smoothFactor
-    self.posY += ((self.mouseY / (self.staticity / self.magnetism)) - self.posY) / self.smoothFactor
-
-    if (self.translateY + self.posY < 0 || self.translateX + self.posX < 0 || self.translateX + self.posX > self.canvasWidth) {
-      self.randomise()
-      self.translateY = self.canvasHeight
+    if (this.translateY + this.posY < 0 || this.translateX + this.posX < 0 || this.translateX + this.posX > this.canvasWidth) {
+      this.randomise()
+      this.translateY = this.canvasHeight
     }
   }
-
-  Bubble.prototype.randomise = function () {
-    let self = this
-    self.colors = ['255,255,255']
-    self.velocity = 30 // Bubble levitation velocity (the higher the slower)
-    self.smoothFactor = 50 // The higher, the smoother
-    self.staticity = 30 // Increase value to make bubbles move slower on mousemove
-    self.magnetism = 0.1 + Math.random() * 4
-    self.color = self.colors[Math.floor(Math.random() * self.colors.length)]
-    self.alpha = self.generateDecimalBetween(10, 20) / 10
-    self.size = self.generateDecimalBetween(1, 4)
-    self.posX = 0
-    self.posY = 0
-    self.movementX = self.generateDecimalBetween(-2, 2) / self.velocity
-    self.movementY = self.generateDecimalBetween(1, 20) / self.velocity
-    self.translateX = self.generateDecimalBetween(0, self.canvasWidth)
-    self.translateY = self.generateDecimalBetween(0, self.canvasHeight)
+  randomise() {
+    this.colors = ['255,255,255']
+    this.velocity = 30 // Bubble levitation velocity (the higher the slower)
+    this.smoothFactor = 50 // The higher, the smoother
+    this.staticity = 30 // Increase value to make bubbles move slower on mousemove
+    this.magnetism = 0.1 + Math.random() * 4
+    this.color = this.colors[Math.floor(Math.random() * this.colors.length)]
+    this.alpha = this.generateDecimalBetween(10, 20) / 10
+    this.size = this.generateDecimalBetween(1, 4)
+    this.posX = 0
+    this.posY = 0
+    this.movementX = this.generateDecimalBetween(-2, 2) / this.velocity
+    this.movementY = this.generateDecimalBetween(1, 20) / this.velocity
+    this.translateX = this.generateDecimalBetween(0, this.canvasWidth)
+    this.translateY = this.generateDecimalBetween(0, this.canvasHeight)
   }
+}
 
-  let Background = function (selector) {
-    let self = this
-    self.canvas = document.getElementById(selector)
-    self.ctx = this.canvas.getContext('2d')
-    self.dpr = window.devicePixelRatio
+
+
+
+
+class Background {
+  constructor(selector) {
+    this.canvas = document.getElementById(selector)
+    this.ctx = this.canvas.getContext('2d')
+    this.dpr = window.devicePixelRatio
   }
-
-  Background.prototype.start = function () {
-    let self = this
-    self.canvasSize()
-    window.addEventListener('resize', function () {
-      self.canvasSize()
-    })
-    self.bubblesList = []
-    self.generateBubbles()
-    self.animate()
+  start() {
+    this.canvasSize()
+    window.addEventListener('resize', () => this.canvasSize())
+    this.bubblesList = []
+    this.generateBubbles()
+    this.animate()
   }
-
-  Background.prototype.canvasSize = function () {
-    let self = this
-    self.container = self.canvas.parentNode
+  canvasSize() {
+    this.container = this.canvas.parentNode
     // Determine window width and height
-    self.w = self.container.offsetWidth
-    self.h = self.container.offsetHeight
-    self.wdpi = self.w * self.dpr
-    self.hdpi = self.h * self.dpr
+    this.w = this.container.offsetWidth
+    this.h = this.container.offsetHeight
+    this.wdpi = this.w * this.dpr
+    this.hdpi = this.h * this.dpr
     // Set canvas width and height
-    self.canvas.width = self.wdpi
-    self.canvas.height = self.hdpi
+    this.canvas.width = this.wdpi
+    this.canvas.height = this.hdpi
     // Set width and height attributes
-    self.canvas.style.width = self.w + 'px'
-    self.canvas.style.height = self.h + 'px'
+    this.canvas.style.width = this.w + 'px'
+    this.canvas.style.height = this.h + 'px'
     // Scale down canvas
-    self.ctx.scale(self.dpr, self.dpr)
+    this.ctx.scale(this.dpr, this.dpr)
   }
-
-  Background.prototype.animate = function () {
-    let self = this
-    self.ctx.clearRect(0, 0, self.canvas.clientWidth, self.canvas.clientHeight)
-    self.bubblesList.forEach(function (bubble) {
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight)
+    this.bubblesList.forEach((bubble) => {
       bubble.update()
-      self.ctx.translate(bubble.translateX, bubble.translateY)
-      self.ctx.beginPath()
-      self.ctx.arc(bubble.posX, bubble.posY, bubble.size, 0, 2 * Math.PI)
-      self.ctx.fillStyle = 'rgba(' + bubble.color + ',' + bubble.alpha + ')'
-      self.ctx.fill()
-      self.ctx.setTransform(self.dpr, 0, 0, self.dpr, 0, 0)
+      this.ctx.translate(bubble.translateX, bubble.translateY)
+      this.ctx.beginPath()
+      this.ctx.arc(bubble.posX, bubble.posY, bubble.size, 0, 2 * Math.PI)
+      this.ctx.fillStyle = 'rgba(' + bubble.color + ',' + bubble.alpha + ')'
+      this.ctx.fill()
+      this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0)
     })
     /* global requestAnimationFrame */
     requestAnimationFrame(this.animate.bind(this))
   }
-
-  Background.prototype.addBubble = function (bubble) {
+  addBubble(bubble) {
     return this.bubblesList.push(bubble)
   }
-
-  Background.prototype.generateBubbles = function () {
-    let self = this
-    for (let i = 0; i < self.bubbleDensity(); i++) {
-      self.addBubble(new Bubble(self.canvas.parentNode))
+  generateBubbles() {
+    for (let i = 0; i < this.bubbleDensity(); i++) {
+      this.addBubble(new Bubble(this.canvas.parentNode))
     }
   }
-
-  Background.prototype.bubbleDensity = function () {
+  bubbleDensity() {
     return 50
   }
+}
 
-  window.addEventListener('load', function () {
-    const heroParticles = new Background('hero-particles')    
-    heroParticles.start()
-  })
+window.addEventListener('load', () => {
+  const heroParticles = new Background('hero-particles')    
+  heroParticles.start()
+})
+
+window.addEventListener("resize", () => {
+  const heroParticles = new Background('hero-particles')
+  heroParticles.start()
+})

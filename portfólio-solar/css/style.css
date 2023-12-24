@@ -18,7 +18,12 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #522c65;
+    background-color: #000;
+    overflow: hidden;
+}
+
+canvas{
+    position: absolute;
 }
 
 .sun{
@@ -46,9 +51,15 @@ body{
 }
 
 .axis.third{
-    height: 600px;
-    width: 600px;
-    animation: anime-1 3s linear infinite;
+    height: 670px;
+    width: 670px;
+    animation: anime-1 4s linear infinite;
+}
+
+.axis.forth{
+    height: 1000px;
+    width: 1000px;
+    animation: anime-1 6s linear infinite;
 }
 
 .planet{
@@ -67,13 +78,19 @@ body{
 .planet.third{
     height: 60px;
     width: 60px;
-    background-color: #a57c1b;
+    background-color: steelblue;
+}
+
+.planet.forth{
+    height: 80px;
+    width: 80px;
+    background-color: #c1440e;
 }
 
 .orbit{
     position: absolute;
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
     left: 50%;    
     bottom: 0;
     transform: translate(-50%, 50px);
@@ -84,7 +101,14 @@ body{
 
 .orbit.third{
     border-right: 2px solid #fff;
-    border-radius: 50px;
+    border-radius: 50%;
+}
+
+.orbit.forth{
+    height: 120px;
+    width: 120px;
+    border-right: 2px solid #fff;
+    border-radius: 50%;
 }
 
 .moon{
@@ -95,6 +119,19 @@ body{
     border-radius: 50%;
     bottom: 0;
     transform: translateY(10px);
+}
+
+.moon.first{
+    width: 30px;
+    height: 30px;
+    transform: translateY(15px);
+}
+
+.moon.second{
+    height: 15px;
+    top: 0;
+    transform: translateY(-7px);
+    width: 15px;
 }
 
 @keyframes anime-1 {
